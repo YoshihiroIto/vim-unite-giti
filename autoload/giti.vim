@@ -40,7 +40,11 @@ function! giti#system_with_specifics(param)"{{{
     endif
   endif
 
-  let ret = system('git ' . a:param.command)
+  if exists('*vimproc#system')
+    let ret = vimproc#system('git ' . a:param.command)
+  else
+    let ret = system('git ' . a:param.command)
+  endif
 
   silent doautocmd User UniteGitiGitExecuted
 
