@@ -19,18 +19,22 @@ let s:symbol_meaning = {
 \}
 " }}}
 
-function! giti#status#list()"{{{
+function! giti#status#list() "{{{
   return map(s:get_list(), 's:build_status_data(v:val)')
-endfunction"}}}
+endfunction "}}}
 
 " local functions {{{
 
 function! s:get_list()
   let res = giti#system('status -s')
+  if type(res) == 0
+    " the operation has canceled
+    return []
+  endif
   return split(res, '\n')
 endfunction
 
-function! s:build_status_data(line)"{{{
+function! s:build_status_data(line) "{{{
   let matches = matchlist(a:line, '^\(.\)\(.\)\s*\(.\+\)$')
 
   let index = matches[1]
@@ -53,7 +57,7 @@ function! s:build_status_data(line)"{{{
 \   'index' : giti#status#symbol#name_of(index),
 \   'work'  : giti#status#symbol#name_of(work),
 \ }
-endfunction"}}}
+endfunction "}}}
 
 " }}}
 
