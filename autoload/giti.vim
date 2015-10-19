@@ -63,8 +63,6 @@ function! giti#system_with_specifics(param) "{{{
 
   let ret = vimproc#system(g:giti_git_command . ' ' . a:param.command)
 
-  silent doautocmd User UniteGitiGitExecuted
-
   if exists('a:param.ignore_error') && a:param.ignore_error
     return ret
   else
