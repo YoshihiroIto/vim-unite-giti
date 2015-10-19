@@ -149,7 +149,7 @@ function! giti#print(string) "{{{
 endfunction "}}}
 
 function! giti#has_shell_error() "{{{
-  return v:shell_error ? 1 : 0
+  return vimproc#get_last_status() ? 1 : 0
 endfunction "}}}
 
 function! giti#input(prompt, ...) "{{{
